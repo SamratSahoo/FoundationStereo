@@ -1,0 +1,16 @@
+# FoundationStereo depth-server environment (added for the tiptop perception stack).
+#
+# Why not environment.yml? That file pins torch 2.4.1, which has no Blackwell
+# (sm_120) kernels, so it cannot run on the RTX 5090. This mirrors M2T2/pixi.toml:
+# a CUDA 12.8 toolchain with torch 2.7.1+cu128 pip-installed by build_server.sh.
+# It also matches how droid-sim-evals/eval/full_eval.py launches the server
+# (`pixi run python server.py`).
+[workspace]
+name = "foundation-stereo-server"
+version = "0.1.0"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.11.*"
+pip = "*"

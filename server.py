@@ -53,7 +53,9 @@ def load_model(ckpt_dir: str) -> bool:
         cfg["vit_size"] = "vitl"
     args = OmegaConf.create(dict(cfg))
     model = FoundationStereo(args)
-    ckpt = torch.load(ckpt_dir, map_location="cpu")
+    # weights_only=False: torch>=2.6 flipped this default to True, which rejects the
+    # numpy scalars pickled in the released checkpoints.
+    ckpt = torch.load(ckpt_dir, map_location="cpu", weights_only=False)
     model.load_state_dict(ckpt["model"])
     _MODEL = model.cuda().eval()
     _ARGS = args
@@ -64,7 +66,7 @@ def load_model(ckpt_dir: str) -> bool:
 def _infer_depth(left_rgb, right_rgb, fx, baseline, scale, hiera, valid_iters):
     import cv2
     import torch
-    from Utils import InputPadder
+    from core.utils.utils import InputPadder
 
     if scale != 1.0:
         left_rgb = cv2.resize(left_rgb, fx=scale, fy=scale, dsize=None)
