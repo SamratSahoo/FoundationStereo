@@ -14,3 +14,11 @@ platforms = ["linux-64"]
 [dependencies]
 python = "3.11.*"
 pip = "*"
+
+[tasks]
+# torch 2.7.1+cu128 and what the server imports.
+setup = "bash tandem_setup.sh"
+# The readme's weights folder (Google Drive), into pretrained_models/: 23-51-11 is the one server.py loads.
+download-weights = "gdown --folder --continue -O pretrained_models https://drive.google.com/drive/folders/1VhPebc_mMxWKccrv7pdQLTvXYVcLYpsf"
+# The depth server tiptop calls (POST /infer, GET /health). Pass --port: tiptop expects 1234.
+server = "python server.py"
