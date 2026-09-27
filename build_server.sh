@@ -25,7 +25,7 @@ echo "=== [3/4] runtime deps (server + run_demo import path) ==="
 pixi run pip install --no-cache-dir \
   timm omegaconf opencv-contrib-python open3d pandas einops \
   huggingface_hub imageio scipy scikit-image trimesh "ruamel.yaml" \
-  transformations gdown \
+  transformations gdown joblib \
   fastapi "uvicorn[standard]" python-multipart
 
 echo "=== [4/4] download weights (Google Drive -> pretrained_models/23-51-11) ==="
